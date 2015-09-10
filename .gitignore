@@ -1,0 +1,6 @@
+release_manage_website/.settings/*
+release_manage_website/.buildpath
+release_manage_website/.project
+release_manage_website/db_config.php
+release_manage_website/query.sql
+release_manage_website/assets/images/Thumbs.db

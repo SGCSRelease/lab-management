@@ -1,0 +1,8 @@
+<?php
+define('DB_SERVER_ADDR', 'localhost');
+define('DB_NAME', 'dbname');
+define('DB_USER_ID', 'userid');
+define('DB_USER_PW', 'userpw');
+
+define('SECURE', FALSE);
+?>

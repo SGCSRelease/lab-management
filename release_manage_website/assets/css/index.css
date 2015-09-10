@@ -1,0 +1,85 @@
+#login, #stage1 {
+	text-align: center;
+}
+
+.is_can_mng {
+	background-color : #7cfc00;
+}
+
+.is_can_mng.yes_hover:hover {
+	background-color : #00bfFf;
+}
+
+.is_prefer_mng {
+	background-color : #ffd700;
+}
+
+.is_prefer_mng.yes_hover:hover {
+	background-color : #da70d6;
+}
+
+.is_cannot_mng {
+	background-color : #ff6347;
+}
+
+.is_cannot_mng_for_stage1.yes_hover:hover {
+	background-color : #32cd32;
+}
+
+* {
+	font-size : 1rem;
+	text-align : center;
+}
+
+h1 {
+	font-size : 1.7rem;
+}
+
+button {
+	font-size : 1.3rem;
+	margin : 4px;
+}
+
+td,th {
+	width : 12%;
+	height : 12%;
+	text-align : center;
+	vertical-align: center;
+}
+
+.my_input {
+	font-size : 1.5rem;
+	margin : 4px;
+}
+
+.not_hover:hover {
+}
+
+@media (max-width:360px){.my_input{height:40px;}}
+@media (min-width:361px) and (max-width:479px){.my_input{height:45px;}}
+@media (min-width:480px) and (max-width:599px){.my_input{height:50px;}}
+@media (min-width:600px) and (max-width:719px){.my_input{height:55px;}}
+@media (min-width:720px) and (max-width:839px){.my_input{height:60px;}}
+@media (min-width:840px) and (max-width:1079px){.my_input{height:70px;}}
+@media (min-width:1080px){.my_input{height:80px;}}
+
+@media (max-width:360px){html{font-size:10px;}}
+@media (min-width:361px) and (max-width:399px){html{font-size:11px;}}
+@media (min-width:400px) and (max-width:439px){html{font-size:12px;}}
+@media (min-width:440px) and (max-width:479px){html{font-size:13px;}}
+@media (min-width:480px) and (max-width:519px){html{font-size:14px;}}
+@media (min-width:520px) and (max-width:559px){html{font-size:15px;}}
+@media (min-width:560px) and (max-width:599px){html{font-size:16px;}}
+@media (min-width:600px) and (max-width:639px){html{font-size:17px;}}
+@media (min-width:640px) and (max-width:679px){html{font-size:18px;}}
+@media (min-width:680px) and (max-width:719px){html{font-size:19px;}}
+@media (min-width:720px) and (max-width:759px){html{font-size:20px;}}
+@media (min-width:760px) and (max-width:799px){html{font-size:21px;}}
+@media (min-width:800px) and (max-width:839px){html{font-size:22px;}}
+@media (min-width:840px) and (max-width:879px){html{font-size:23px;}}
+@media (min-width:880px) and (max-width:919px){html{font-size:24px;}}
+@media (min-width:920px) and (max-width:959px){html{font-size:25px;}}
+@media (min-width:960px) and (max-width:999px){html{font-size:26px;}}
+@media (min-width:1000px) and (max-width:1039px){html{font-size:27px;}}
+@media (min-width:1040px) and (max-width:1079px){html{font-size:28px;}}
+@media (min-width:1080px) {html{font-size:29px;}}
