@@ -3,20 +3,22 @@ from random import randint
 from random import shuffle
 from sys import argv
 
-if not ((argv[1]=='-r' and len(argv)==3) or (argv[1]=='-e' and len(argv)==2)):
+def error():
     print('Usage: [ -e / -r [number of search] ]')
     print('-e : exhaustive search')
     print('-r : random search')
     exit()
+
+if len(argv) < 2:
+    error()
+
+if not ((argv[1]=='-r' and len(argv)==3) or (argv[1]=='-e' and len(argv)==2)):
+    error()
 if argv[1]=='-r':
     try:
         int(argv[2])
     except:
-        print('Usage: [ -e / -r [number of search] ]')
-        print('-e : exhaustive search')
-        print('-r : random search')
-        print('Note that number of search should be an integer number')
-        exit()
+        error()
 # ignoring null string from input
 def myinput():
     try:
@@ -102,6 +104,9 @@ def exhaustdfs(curr=0,stk={},ans=[]):
             del stk[k]
     return ans
 
+max_weight = 0
+max_list = list()
+
 # list of answers
 essential_list = list()
 if argv[1]=='-e':
@@ -126,11 +131,17 @@ for essential in essential_list:
         essential[i] = [essential[i]]
     for (i,j) in queue:
         essential[i].append(j)
-
+    
+    tmp_weight = 0
     for i in essential.keys():
-        print(class_dict[i][0],class_dict[i][1])
-        print(','.join(person_dict[j][0] for j in essential[i]))
+        for j in essential[i]:
+            tmp_weight += weight_list[(i,j)]
         class_dict[i][3] += len(essential[i])
         for j in essential[i]: person_dict[j][2] += 1
-    print('')
+    if tmp_weight > max_weight:
+        max_weight = tmp_weight
+        max_list = essential
 
+for i in max_list.keys():
+    print(class_dict[i][0],class_dict[i][1])
+    print(','.join(person_dict[j][0] for j in essential[i]))
