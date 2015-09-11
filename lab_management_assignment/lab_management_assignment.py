@@ -2,6 +2,9 @@ from copy import deepcopy
 from random import randint
 from random import shuffle
 from sys import argv
+import timeit
+
+MAX_TIME_PER_CALC = 10
 
 def error():
     print('Usage: [ -e / -r [number of search] ]')
@@ -9,16 +12,6 @@ def error():
     print('-r : random search')
     exit()
 
-if len(argv) < 2:
-    error()
-
-if not ((argv[1]=='-r' and len(argv)==3) or (argv[1]=='-e' and len(argv)==2)):
-    error()
-if argv[1]=='-r':
-    try:
-        int(argv[2])
-    except:
-        error()
 # ignoring null string from input
 def myinput():
     try:
@@ -29,14 +22,25 @@ def myinput():
     except EOFError:
         return ""
 
+if len(argv) < 2:
+    error()
+
+if not ((argv[1]=='-r' and len(argv)==3) or (argv[1]=='-e' and len(argv)==2)):
+    error()
+
+if argv[1]=='-r':
+    try:
+        int(argv[2])
+    except:
+        error()
+
 # class input
 # class_dict[idx of server] = (day of the week, period, weight of period, total person managing)
 total_class = int(myinput())
 class_dict = {}
 for i in range(total_class):
     s = myinput().split()
-    class_dict[int(s[0])] = list((s[1],s[2],2 if s[2]==7 else 1,2))
-    # 2 meaning s[0] weighs 2 sessions. (evening)
+    class_dict[int(s[0])] = list((s[1],s[2],int(s[3]),int(s[4])))
 
 # person input
 # person_dict[idx of server] = (name, chosen number of sessions, mandatory sessions)
@@ -44,7 +48,7 @@ total_person = int(myinput())
 person_dict = {}
 for i in range(total_person):
     s = myinput().split()
-    person_dict[int(s[0])] = list((s[1],int(s[2]),2))
+    person_dict[int(s[0])] = list((s[1],int(s[2]),int(s[3])))
     # 2 meaning person s[0] need to do 2 session
 
 # graph input
@@ -68,6 +72,8 @@ for i in edge_list: edge_list[i].sort(key = lambda x:(-weight_list[(i,x)],-perso
 # brute force algorithm
 # returns as dict[class] = person
 def dfs(curr=0):
+    if timeit.default_timer() - tic > MAX_TIME_PER_CALC:
+        raise
     if curr == total_class: return True
     res = dict()
     k = edge_key_list[curr]
@@ -105,7 +111,7 @@ def exhaustdfs(curr=0,stk={},ans=[]):
     return ans
 
 max_weight = 0
-max_list = list()
+max_list = []
 
 # list of answers
 essential_list = list()
@@ -114,7 +120,16 @@ if argv[1]=='-e':
 elif argv[1]=='-r':
     for t in range(int(argv[2])):
         edge_key_list = sorted(edge_list.keys(),key = lambda x:len(edge_list[x])+randint(-3,3))
-        essential_list.append(dfs())
+        tic = timeit.default_timer()
+        tmp_dict = person_dict
+        try:
+            l = dfs()
+            if l:
+                essential_list.append(l)
+                print(l)
+        except:
+            person_dict = tmp_dict
+            pass
 
 for essential in essential_list:
     for i,j in essential.items():
@@ -123,7 +138,7 @@ for essential in essential_list:
     priority_list = sorted(weight_list.keys(),key=lambda x:-weight_list[x])
     queue = []
     for (i,j) in priority_list:
-        if class_dict[i][3] > 0 and person_dict[j][2] > 0 and essential[i] != j:
+        if class_dict[i][3] > 0 and person_dict[j][2] > 0 and i in essential.keys() and essential[i] != j:
             queue.append((i,j))
             class_dict[i][3] -= 1
             person_dict[j][2] -= 1
@@ -138,10 +153,10 @@ for essential in essential_list:
             tmp_weight += weight_list[(i,j)]
         class_dict[i][3] += len(essential[i])
         for j in essential[i]: person_dict[j][2] += 1
-    if tmp_weight > max_weight:
+    if tmp_weight > max_weight and len(essential) > len(max_list):
         max_weight = tmp_weight
         max_list = essential
 
 for i in max_list.keys():
     print(class_dict[i][0],class_dict[i][1])
-    print(','.join(person_dict[j][0] for j in essential[i]))
+    print(','.join(person_dict[j][0] for j in max_list[i]))
