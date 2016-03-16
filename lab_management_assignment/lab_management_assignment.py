@@ -119,7 +119,7 @@ if argv[1]=='-e':
     essential_list = exhaustdfs()
 elif argv[1]=='-r':
     for t in range(int(argv[2])):
-        edge_key_list = sorted(edge_list.keys(),key = lambda x:len(edge_list[x])+randint(-3,3))
+        edge_key_list = sorted(edge_list.keys(),key = lambda x:len(edge_list[x])+randint(-30,30))
         tic = timeit.default_timer()
         tmp_dict = person_dict
         try:
@@ -157,6 +157,6 @@ for essential in essential_list:
         max_weight = tmp_weight
         max_list = essential
 
-for i in max_list.keys():
+for i in max_list.keys():  #.keys():
     print(class_dict[i][0],class_dict[i][1])
     print(','.join(person_dict[j][0] for j in max_list[i]))
